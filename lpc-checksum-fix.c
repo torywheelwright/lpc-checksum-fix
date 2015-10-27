@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <string.h>
 
 FILE* in = NULL;
 FILE* out = NULL;
@@ -35,12 +36,20 @@ int main(int argc, char **argv)
 	uint32_t checksum = 0;
 	unsigned int i;
 
-	// Need to impliment better argument validation (file extensions, etc)
-
 	// Validate arguments and ensure files can be opened
 	if(argc != 3)
 	{
 		exit_on_error("Invalid arguments. Usage: checksum in.bin out.bin\n");
+	}
+	if(strcmp(".bin", &argv[1][strlen(argv[1]) - 4]))
+	{
+		exit_on_error("Input file %s is incorrect format; expecting .bin\n",
+		              argv[1]);
+	}
+	if(strcmp(".bin", &argv[2][strlen(argv[2]) - 4]))
+	{
+		exit_on_error("Output file %s is incorrect format; expecting .bin\n",
+		              argv[2]);
 	}
 	if(!(in = fopen(argv[1], "r")))
 	{
@@ -54,7 +63,6 @@ int main(int argc, char **argv)
 	{
 		exit_on_error("Failed to open output file %s for writing\n", argv[2]);
 	}
-
 	// Read first 6 words through and calculate checksum
 	for(i = 0;
 	    i < 7 && fread(&current_word, sizeof(uint32_t), 1, in);

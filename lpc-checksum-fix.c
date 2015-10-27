@@ -1,5 +1,6 @@
 /**
- * Inserts the checksum in an LPC1769 binary image
+ * Inserts the proper checksum in a binary image for an NXP LPC ARM Cortex based
+ * microcontroller.
  *
  * Written on 2015 Oct 27 by Tory Wheelwright
  */
